@@ -1,0 +1,29 @@
+extends layout
+
+block content
+
+    h1 Update Book
+
+    h2 Oooops!
+    ol
+        each err in error
+            li= err.message
+
+    form(action='/books/new' method="post")
+        label Title:
+        input(type="text" name="title")
+        br
+        label Author:
+        input(type="text" name="author")
+        br
+        label Genre:
+        input(type="text" name="genre")
+        br
+        label Year:
+        input(type="text" name="year")
+        br
+        input(type="submit"  value="Update Book")
+    br
+    a(href="/books") Cancel
+        
+        
