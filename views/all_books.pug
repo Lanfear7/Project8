@@ -16,3 +16,13 @@ block content
                 td= book.author
                 td= book.genre
                 td= book.year
+    br
+    - var i = currentPage;
+    - var j = totalPages;
+    if i < j
+        - ++i
+        a(href=`/books?page=${i}`) Next Page
+    br
+    if currentPage > 1
+        a(href=`/books?page=${--currentPage}`) Prev Page
+
