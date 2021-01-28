@@ -4,16 +4,16 @@ block content
 
     h1 Create New Book
     form(action='/books/new' method="post")
-        label Title:
+        label(for="title") Title:
         input(type="text" name="title")
         br
-        label Author:
+        label(for="author") Author:
         input(type="text" name="author")
         br
-        label Genre:
+        label(for="genre") Genre:
         input(type="text" name="genre")
         br
-        label Year:
+        label(for="year") Year:
         input(type="text" name="year")
         br
         input(class="updateBook" type="submit"  value="Create Book")
