@@ -3,19 +3,23 @@ extends layout
 block content
     h1= title
     a(href="/books/new") Create New Book
+    form(action="/books" method="post")
+        input(type="text" name="search")
+        input(type="submit" value="Search")
     table
         tr
             th Title
             th Author
             th Genre
             th Year
-        each book in books
-            tr
-                td
-                    a(href="/books/"+book.id)= book.title
-                td= book.author
-                td= book.genre
-                td= book.year
+        if books
+            each book in books
+                tr
+                    td
+                        a(href="/books/"+book.id)= book.title
+                    td= book.author
+                    td= book.genre
+                    td= book.year
     br
     - var i = currentPage;
     - var j = totalPages;

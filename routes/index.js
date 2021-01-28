@@ -2,7 +2,7 @@ var express = require('express');
 const { render } = require('pug');
 var router = express.Router();
 const {sequelize, Book} = require('../models');
-const querystring = require('querystring');
+const { Op } = require("sequelize");
 
 
 /* Handler function to wrap each route. */
@@ -27,10 +27,11 @@ router.get('/books', asyncHandler(async(req, res) => {
   let setUp = parseInt(req.query.page) - 1
   let pageOffset = setUp * 5
   
-  const books = await Book.findAndCountAll({raw: true,
-                                            limit: 5,
-                                            offset: pageOffset,
-                                            });
+  const books = await Book.findAndCountAll({
+    raw: true,
+    limit: 5,
+    offset: pageOffset,
+  });
 
             
     //
@@ -39,6 +40,26 @@ router.get('/books', asyncHandler(async(req, res) => {
   let totalPages = Math.ceil(pages)
   res.render('all_books', { books: books.rows, pages, title: 'Books',  currentPage, totalPages });
 }));
+
+//Send a search request to DB
+router.post('/books', asyncHandler(async(req, res) => {
+  console.log('****** request to BD ******')
+  console.log(req.body.search)
+  let lookUp = req.body.search.toLowerCase()
+  console.log(lookUp)
+  const books = await Book.findAll({
+    where: {
+      [Op.or] : {
+        title: sequelize.where(sequelize.fn('LOWER', sequelize.col('title')), 'LIKE', '%' + lookUp + '%'),
+        author: sequelize.where(sequelize.fn('LOWER', sequelize.col('author')), 'LIKE', '%' + lookUp + '%'),
+        genre: sequelize.where(sequelize.fn('LOWER', sequelize.col('genre')), 'LIKE', '%' + lookUp + '%'),
+        year: sequelize.where(sequelize.fn('LOWER', sequelize.col('year')), 'LIKE', '%' + lookUp + '%'),
+      }
+    }
+  })
+  console.log(books)
+  res.render('all_books', { title:"Search", books})
+}))
 
 
 //SHOW create new book form 
