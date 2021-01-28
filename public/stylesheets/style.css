@@ -1,6 +1,6 @@
 *{
-  background: rgb(63, 63, 63);
-  color: #fff;
+  background: rgb(240, 238, 238);
+  color: rgb(0, 0, 0);
 }
 body {
   padding: 50px;
@@ -8,5 +8,93 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  background-color: rgba(0, 128, 0, 0);
+  color: #ff9b04;
+}
+.createBook{
+  display: flex;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  width: 150px;
+  height: 20px;
+  padding: .5rem;
+  margin-bottom: 10px;
+  background-color:  rgb(27, 27, 27);
+  align-items: center;
+  justify-content: center;
+}
+.pageBtn{
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  width: 150px;
+  height: 20px;
+  padding: .5rem;
+  margin: 10px;
+  background-color:  rgb(27, 27, 27);
+}
+.searchBtn{
+  color: white;
+  width: 100px;
+  margin-left: 0.5rem;
+  padding: 0.2rem;
+  background-color: rgb(27, 27, 27);
+  border: none;
+}
+table, th, td {
+  background-color: rgb(56, 56, 56);
+  border: solid black 1px;
+}
+table {
+  margin-top: 1rem;
+  width: 70%;
+  border-collapse: collapse;
+}
+th, tr{
+  color: #fff;
+  height: 30px;
+}
+td{
+  color: #fff;
+}
+.bookDetailForm, form{
+  padding: 1%;
+  margin: 0%;
+  width: 40%;
+  background-color: rgb(56, 56, 56);
+}
+.bookDetailForm, label, input{
+  border: none;
+  margin-right: .5rem;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
+label{
+  background-color: #ff9b0400;
+  margin-left: 40px;
+  color:  #ff9b04;
+}
+.updateBook{
+  margin-left: 40px;
+}
+.cancelBtn{
+  text-decoration: none;
+  margin-left: 40px;
+}
+.deleteBtn{
+  border: none;
+  margin-top: 20px;
+  margin-left: 40px;
+}
+.deleteForm{
+  padding: 1%;
+}
+.searchForm{
+  padding: 0%;
+  padding-top: 2%;
+  background-color: rgb(240, 238, 238);
+}
+.searchInput{
+  color:rgb(240, 238, 238);
+  height: 20px;
+  background-color: rgb(63, 63, 63);
 }

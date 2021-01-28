@@ -49,7 +49,7 @@ router.post('/books', asyncHandler(async(req, res) => {
   console.log(lookUp)
   const books = await Book.findAll({
     where: {
-      [Op.or] : {
+      [Op.or] : { //find book that match title OR author OR genre OR year (will set the search value to lover and the db value to lower case to match % will match partial matches)
         title: sequelize.where(sequelize.fn('LOWER', sequelize.col('title')), 'LIKE', '%' + lookUp + '%'),
         author: sequelize.where(sequelize.fn('LOWER', sequelize.col('author')), 'LIKE', '%' + lookUp + '%'),
         genre: sequelize.where(sequelize.fn('LOWER', sequelize.col('genre')), 'LIKE', '%' + lookUp + '%'),

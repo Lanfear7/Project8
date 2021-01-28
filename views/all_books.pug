@@ -2,10 +2,10 @@ extends layout
 
 block content
     h1= title
-    a(href="/books/new") Create New Book
-    form(action="/books" method="post")
-        input(type="text" name="search")
-        input(type="submit" value="Search")
+    a(class="createBook" href="/books/new") Create New Book
+    form(class="searchForm" action="/books" method="post")
+        input(class="searchInput" type="text" name="search")
+        input(class="searchBtn" type="submit" value="Search")
     table
         tr
             th Title
@@ -23,10 +23,11 @@ block content
     br
     - var i = currentPage;
     - var j = totalPages;
+    if currentPage > 1
+        a(class="pageBtn" href=`/books?page=${--currentPage}`) Prev Page
+
     if i < j
         - ++i
-        a(href=`/books?page=${i}`) Next Page
-    br
-    if currentPage > 1
-        a(href=`/books?page=${--currentPage}`) Prev Page
+        a(class="pageBtn" href=`/books?page=${i}`) Next Page
+
 
