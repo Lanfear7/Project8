@@ -38,7 +38,7 @@ router.get('/books', asyncHandler(async(req, res) => {
   let pages = books.count / 5;
   let currentPage = parseInt(req.query.page);
   let totalPages = Math.ceil(pages)
-  res.render('all_books', { books: books.rows, pages, title: 'Books',  currentPage, totalPages });
+  res.render('all-books', { books: books.rows, pages, title: 'Books',  currentPage, totalPages });
 }));
 
 //Send a search request to DB
@@ -58,13 +58,13 @@ router.post('/books', asyncHandler(async(req, res) => {
     }
   })
   console.log(books)
-  res.render('all_books', { title:"Search", books})
+  res.render('all-books', { title:"Search", books})
 }))
 
 
 //SHOW create new book form 
 router.get('/books/new', asyncHandler(async(req, res) => {
-  res.render('new_book')
+  res.render('new-book')
 }));
 
 //POSTS a new book to the DB
@@ -76,7 +76,7 @@ router.post('/books/new', asyncHandler(async(req, res) => {
   }catch(error){
     if(error.name === "SequelizeValidationError"){ 
       book = Book.build(req.body) //build the data from the data previously entered 
-      res.render('form_error', { book, error: error.errors })
+      res.render('form-error', { book, error: error.errors })
     } else {
       res.sendStatus(404)
     }
@@ -85,9 +85,17 @@ router.post('/books/new', asyncHandler(async(req, res) => {
 }));
 
 //SHOW book detail form
-router.get('/books/:id', asyncHandler(async(req, res) => {
-  const book = await Book.findByPk(req.params.id,{raw: true})
-  res.render('book_detail', { book })
+router.get('/books/:id', asyncHandler(async(req, res, next) => {
+  let book = await Book.findByPk(req.params.id)
+  if(book){
+    console.log(book)
+    book = await Book.findByPk(req.params.id,{raw: true})
+    res.render('book-detail', { book })
+  } else {
+    throw new Error('Page Not Found')
+  }
+  
+  
 }));
 
 //UPDATE book details
@@ -105,7 +113,7 @@ router.post('/books/:id', asyncHandler(async(req, res) => {
     if(error.name === "SequelizeValidationError") {
       book = await Book.build(req.body);
       book.id = req.params.id; // make sure correct article gets updated
-      res.render("book_detail", { book, error: error.errors })
+      res.render("book-detail", { book, error: error.errors })
     } else {
       throw error;
     }
@@ -118,15 +126,5 @@ router.post('/books/:id/delete', asyncHandler(async(req, res) => {
   await book.destroy()
   res.redirect(301, '/')
 }))
-
-//pagination middleware 
-function pageUp(req, res){
-  console.log('page up******')
-}
-
-function pageDown(req, res){
-  console.log('page down*****')
-}
-
 
 module.exports = router;

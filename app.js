@@ -41,7 +41,7 @@ app.use(function(req, res, next) {
   const error = new Error('Page Not Found')
   error.status = 404
   console.log(`Error ${error.status} ${error.message}`)
-  res.render('page_not_found', { error })
+  res.render('page-not-found', { error })
 });
 
 // error handler
@@ -52,9 +52,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  console.log(`Error ${err.status} ${err.message}`)
-  res.render('error', { error });
-  console.log()
+  console.log(`***** Error ${err.status} ${err.message}`)
+  res.render('error', { error: err });
 });
 
 
