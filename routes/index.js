@@ -43,10 +43,7 @@ router.get('/books', asyncHandler(async(req, res) => {
 
 //Send a search request to DB
 router.post('/books', asyncHandler(async(req, res) => {
-  console.log('****** request to BD ******')
-  console.log(req.body.search)
   let lookUp = req.body.search.toLowerCase()
-  console.log(lookUp)
   const books = await Book.findAll({
     where: {
       [Op.or] : { //find book that match title OR author OR genre OR year (will set the search value to lover and the db value to lower case to match % will match partial matches)
@@ -57,7 +54,6 @@ router.post('/books', asyncHandler(async(req, res) => {
       }
     }
   })
-  console.log(books)
   res.render('all-books', { title:"Search", books})
 }))
 
@@ -80,7 +76,6 @@ router.post('/books/new', asyncHandler(async(req, res) => {
     } else {
       res.sendStatus(404)
     }
-    console.log(error.name)
   }
 }));
 
@@ -88,9 +83,8 @@ router.post('/books/new', asyncHandler(async(req, res) => {
 router.get('/books/:id', asyncHandler(async(req, res, next) => {
   let book = await Book.findByPk(req.params.id)
   if(book){
-    console.log(book)
     book = await Book.findByPk(req.params.id,{raw: true})
-    res.render('book-detail', { book })
+    res.render('update-book', { book })
   } else {
     throw new Error('Page Not Found')
   }
@@ -113,7 +107,7 @@ router.post('/books/:id', asyncHandler(async(req, res) => {
     if(error.name === "SequelizeValidationError") {
       book = await Book.build(req.body);
       book.id = req.params.id; // make sure correct article gets updated
-      res.render("book-detail", { book, error: error.errors })
+      res.render("update-book", { book, error: error.errors })
     } else {
       throw error;
     }
